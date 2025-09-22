@@ -7,28 +7,36 @@ import EditForm from './EditForm';
 const List = () => {
   const [todos, setTodos] = useState([]);
 
+  // Tambah todo baru
   const addTodo = task => {
-    setTodos(prev => [
-      ...prev,
+    setTodos(prevTodos => [
+      ...prevTodos,
       { id: uuid(), task, isEditing: false, completed: false },
     ]);
   };
 
-  const deleteTodo = id => setTodos(prev => prev.filter(todo => todo.id !== id));
+  // Hapus todo
+  const deleteTodo = id => {
+    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+  };
 
-  const toggleEdit = id =>
-    setTodos(prev =>
-      prev.map(todo =>
+  // Toggle mode edit
+  const toggleEdit = id => {
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
         todo.id === id ? { ...todo, isEditing: !todo.isEditing } : todo
       )
     );
+  };
 
-  const editTask = (id, task) =>
-    setTodos(prev =>
-      prev.map(todo =>
-        todo.id === id ? { ...todo, task, isEditing: !todo.isEditing } : todo
+  // Update task
+  const editTask = (id, newTask) => {
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
+        todo.id === id ? { ...todo, task: newTask, isEditing: !todo.isEditing } : todo
       )
     );
+  };
 
   return (
     <div className="sm:w-1/2 mt-20">
