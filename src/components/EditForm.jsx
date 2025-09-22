@@ -1,33 +1,32 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-const EditForm = ({ editTask, task }) => {
-  const [inputValue, setInputValue] = useState("");
+const EditForm = props => {
+  const { editTask, task } = props;
+  const [value, setValue] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!inputValue.trim()) return;
-
-    editTask(task.id, inputValue.trim());
-    setInputValue("");
+  const handlesubmit = e => {
+    e.preventDefault();
+    if (value) {
+      editTask(task.id, value);
+      setValue('');
+    }
   };
-
   return (
-    <form onSubmit={handleSubmit} className="flex gap-3 mb-10">
+    <form className="flex gap-3 mb-10" onSubmit={handlesubmit}>
       <input
         type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        placeholder={task.task}
         className="w-full p-3 rounded-lg sm:text-xl bg-slate-300 font-semibold"
+        placeholder={task.task}
+        value={value}
+        onChange={e => setValue(e.target.value)}
       />
       <button
         type="submit"
-        className="px-8 py-3 font-semibold border dark:border-gray-100 dark:text-gray-100 bg-blue-700 rounded-md"
+        className="px-8 py-3 font-semibold border  dark:border-gray-100 dark:text-gray-100 bg-blue-700 rounded-md "
       >
         Update
       </button>
     </form>
   );
 };
-
 export default EditForm;
